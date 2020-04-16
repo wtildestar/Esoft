@@ -39,7 +39,7 @@ assert([Int]().challenge1() == nil, "Challenge 1 failed")
  */
 
 func challenge2(input: [Int]) -> [Int] {
-    let arr = Array(Set(1...100).symmetricDifference(Set(input)))
+    let arr = Array(Set(1...100).symmetricDifference(Set(input))).sorted()
   return arr
 }
 
@@ -47,7 +47,7 @@ var testArray = Array(1...100)
 testArray.remove(at: 25)
 testArray.remove(at: 20)
 testArray.remove(at: 6)
-//assert(challenge2(input: testArray) == [7, 21, 26], "Challenge 2 failed")
+assert(challenge2(input: testArray) == [7, 21, 26], "Challenge 2 failed")
 
 
 /*
@@ -62,9 +62,13 @@ testArray.remove(at: 6)
  Hint #4: Стоит использовать rethrows, чтобы не раздражать пользователей, которые используют non-throwing функции
  */
 
-extension Array {
-    func challenge3<U>(_ transform: (Element) -> U) -> [U] {
-        return Array<U>(self.lazy.map(transform))
+extension Collection {
+    func challenge3<T>(_ transform: (Element) -> T) ->  [T] {
+        var returnValue = [T]()
+        for item in self {
+            returnValue.append(transform(item))
+        }
+        return returnValue
     }
 }
 
